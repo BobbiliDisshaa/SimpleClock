@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="clock" id="clock">
+        <p>{{ time }}</p>
+    </div>
+
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+
+            hours = ('0' + hours).slice(-2);
+            minutes = ('0' + minutes).slice(-2);
+            seconds = ('0' + seconds).slice(-2);
+
+            var date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            var timeString = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+            
+            var clockDiv = document.getElementById('clock');
+            clockDiv.innerHTML = '<p class="time">' + timeString + '</p>' +
+                                 '<p class="date">' + date + '</p>';
+        }
+
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
